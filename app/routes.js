@@ -1,7 +1,8 @@
-const Sighting = require('../models/sighting');
+const Sighting = require('./models/sighting');
 
 function getSightings( response ) {
-   Sighting.fetch()
+   Sighting.forge()
+     .fetch()
      .then( function( sightings ) {
      	  response.json( sightings );
      })
