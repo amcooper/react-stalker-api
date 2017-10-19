@@ -14,6 +14,8 @@ function getSightings( response ) {
 module.exports = function( app ) {
 	app.get('/api/sightings', function( request, response ) {
 		getSightings( response );
+		// TODO start a branch with SQL code in pg clients
+		// const res = await client.query('SELECT * FROM sightings')
 	});
 
 	app.post('/api/sightings', function( request, response ) {
