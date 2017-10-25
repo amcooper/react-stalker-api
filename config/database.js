@@ -6,10 +6,25 @@
 //   }	
 // });
 
+// module.exports = {
+//   client: 'pg',
+//   connection: {
+//     host : '127.0.0.1',
+//     database : 'react-stalker-api'
+//   }	
+// };
+
+const { Pool } = require 'pg';
+
+const pool = new Pool({
+  user: 'adamcooper',
+  host: '127.0.0.1',
+  database: 'react-stalker-api',
+  // password: 'secretpassword'
+});
+
 module.exports = {
-  client: 'pg',
-  connection: {
-    host : '127.0.0.1',
-    database : 'react-stalker-api'
-  }	
+	query: (text, params, callback) => {
+		return pool.query(text, params, callback);
+	}
 };
