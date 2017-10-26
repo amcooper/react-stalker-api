@@ -1,15 +1,26 @@
-const db = require '../config/database';
+const db = require( '../config/database' );
 
 module.exports = function( app ) {
 	app.get( '/api/sightings', ( request, response, next ) => {
-    db.query( 'SELECT * FROM sightings', ( err, response ) => {
-    	if ( err ) {
-    		return next( err );
-    	}
-    	response.send( response.rows[0] );
-    });
+		db.serialize( function() {
+	    db.all( 'SELECT * FROM sightings', ( err, rows ) => {
+	    	if ( err ) {
+	    		return next( err );
+	    	}
+	    	return response.json( rows );
+	    });
+	  });
 	});
+
+
 };
+
+// id INTEGER PRIMARY KEY,
+// celebrity VARCHAR(80),
+// stalker VARCHAR(80),
+// date TIMESTAMP,
+// location VARCHAR(80),
+// comment VARCHAR(255)
 
 // const Sighting = require('./models/sighting');
 

@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+const db = require('../config/database');
+
+db.serialize( function() {
+  db.run('DROP TABLE IF EXISTS sightings');
+  db.run(`
+    CREATE TABLE sightings (
+      id INTEGER PRIMARY KEY,
+      celebrity VARCHAR(80),
+      stalker VARCHAR(80),
+      date TIMESTAMP,
+      location VARCHAR(80),
+      comment VARCHAR(255)
+    );
+  `);
+  console.log( 'Migration successful.' );
+});
+
+db.close();
