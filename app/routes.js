@@ -2,7 +2,7 @@ const db = require( '../config/database' );
 
 module.exports = function( app ) {
 	app.get( '/api/sightings', ( request, response, next ) => {
-		db.serialize( function() {
+		db.serialize( function() { // refactor to es6
 	    db.all( 'SELECT * FROM sightings', ( err, rows ) => {
 	    	if ( err ) {
 	    		return next( err );
@@ -10,9 +10,31 @@ module.exports = function( app ) {
 	    	return response.json( rows );
 	    });
 	  });
+	  db.close(); // not sure this helps.
 	});
 
+  app.get( '/api/sightings/:id', (request, response, next ) => {
+    db.serialize( function() {
+    	db.get( 'SELECT * FROM sightings WHERE id = ?', request.params.id, ( err, row ) => {
+    		if ( err ) {
+    			return next( err );
+    		}
+    		return response.json( row );
+    	});
+    });
+    db.close();
+  });
 
+  app.post( '/api/sightings', ( request, response, next ) => {
+    db.serialize( function() {
+    	db.run( 'INSERT INTO sightings ( celebrity, stalker, date, location, comment ) VALUES ( ?, ?, ?, ?, ? )', [ request.params.celebrity, request.params.stalker, request.params.date, request.params.location, request.params.comment ], ( err, lastID, changes ) => {
+    		if ( err ) {
+    			return next( err );
+    		}
+    		console.log( 'Record created.' );
+    	});
+    });
+  });
 };
 
 // id INTEGER PRIMARY KEY,
