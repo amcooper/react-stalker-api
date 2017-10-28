@@ -10,7 +10,6 @@ module.exports = function( app ) {
 	    	return response.json( rows );
 	    });
 	  });
-	  db.close(); // not sure this helps.
 	});
 
   app.get( '/api/sightings/:id', (request, response, next ) => {
@@ -22,17 +21,21 @@ module.exports = function( app ) {
     		return response.json( row );
     	});
     });
-    db.close();
   });
 
   app.post( '/api/sightings', ( request, response, next ) => {
     db.serialize( function() {
-    	db.run( 'INSERT INTO sightings ( celebrity, stalker, date, location, comment ) VALUES ( ?, ?, ?, ?, ? )', [ request.params.celebrity, request.params.stalker, request.params.date, request.params.location, request.params.comment ], ( err, lastID, changes ) => {
-    		if ( err ) {
-    			return next( err );
-    		}
-    		console.log( 'Record created.' );
+    	let statement = db.prepare( 'INSERT INTO sightings ( celebrity, stalker, date, location, comment ) VALUES ( ?, ?, ?, ?, ? )');
+    	console.log( 'db.prepare' ); // debug
+    	console.log( `Request params: ${ request.params.celebrity }` ); // debug
+    	statement.run( request.params.celebrity, request.params.stalker, request.params.date, request.params.location, request.params.comment, ( err ) => {
+    		if ( err ) { return next( err ); }
+    		console.log( 'statement.run' ); // debug
     	});
+    	statement.finalize();
+  		console.log( `Request params: ${ request.params.celebrity }` ); // debug
+  		console.log( 'Record created.' );
+  		return response.status(200);
     });
   });
 };
