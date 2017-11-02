@@ -31,6 +31,20 @@ module.exports = function( app ) {
 		response.status( 200 );
 		//  });
   });  	
+//    db.serialize( function() {
+//    	let statement = db.prepare( 'INSERT INTO sightings ( celebrity, stalker, date, location, comment ) VALUES ( ?, ?, ?, ?, ? )');
+//    	console.log( 'db.prepare' ); // debug
+//    	console.log( `Request params: ${ request.params.celebrity }` ); // debug
+//    	statement.run( request.params.celebrity, request.params.stalker, request.params.date, request.params.location, request.params.comment, ( err ) => {
+//    		if ( err ) { return next( err ); }
+//    		console.log( 'statement.run' ); // debug
+//    	});
+//    	statement.finalize();
+//  		console.log( `Request params: ${ request.params.celebrity }` ); // debug
+//  		console.log( 'Record created.' );
+//  		return response.status(200);
+//    });
+//  });
 };
 
   // 	db.run( "INSERT INTO sightings ( celebrity, stalker, location, comment ) VALUES ( ?, ?, ?, ? )", request.body.celebrity, request.body.stalker, request.body.location, request.body.comment, function( err ) {
