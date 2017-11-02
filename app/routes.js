@@ -24,21 +24,37 @@ module.exports = function( app ) {
   });
 
   app.post( '/api/sightings', ( request, response, next ) => {
-    db.serialize( function() {
-    	let statement = db.prepare( 'INSERT INTO sightings ( celebrity, stalker, date, location, comment ) VALUES ( ?, ?, ?, ?, ? )');
-    	console.log( 'db.prepare' ); // debug
-    	console.log( `Request params: ${ request.params.celebrity }` ); // debug
-    	statement.run( request.params.celebrity, request.params.stalker, request.params.date, request.params.location, request.params.comment, ( err ) => {
-    		if ( err ) { return next( err ); }
-    		console.log( 'statement.run' ); // debug
-    	});
-    	statement.finalize();
-  		console.log( `Request params: ${ request.params.celebrity }` ); // debug
-  		console.log( 'Record created.' );
-  		return response.status(200);
-    });
-  });
+  	// response.send( "successful post." );
+  	// db.serialize( function() {
+		// db.run( `INSERT INTO sightings ( celebrity, stalker, location, comment ) VALUES ( ${request.body.celebrity}, ${request.body.stalker}, ${request.body.location}, ${request.body.comment} )` );
+		db.run( "INSERT INTO sightings ( celebrity, stalker, location, comment ) VALUES ( 'test1', 'test2', 'test3','test4' )" );
+		response.status( 200 );
+		//  });
+  });  	
 };
+
+  // 	db.run( "INSERT INTO sightings ( celebrity, stalker, location, comment ) VALUES ( ?, ?, ?, ? )", request.body.celebrity, request.body.stalker, request.body.location, request.body.comment, function( err ) {
+  	// 		if ( err ) { 
+  	// 			console.error( err );
+  	// 			return next( err ); 
+  	// 		}
+  	// 	});
+  	// 	// return response.status( 200 );
+  	// });
+  	// response.json( request.body.celebrity );
+   //  db.serialize( function() {
+   //  	let statement = db.prepare( 'INSERT INTO sightings ( celebrity, stalker, date, location, comment ) VALUES ( ?, ?, ?, ?, ? )' );
+   //  	console.log( 'db.prepare' ); // debug
+   //  	console.log( `Request params: ${ Object.values( request.body )}` ); // debug
+   //  	statement.run( request.body.celebrity, request.body.stalker, request.body.date, request.body.location, request.body.comment, function( err ) {
+   //  		if ( err ) {
+   //  			return next( err );
+   //  		}
+   //  	}).finalize();
+  	// 	console.log( 'statement.run' ); // debug
+  	// 	console.log( `Request params: ${ request.body.celebrity }` ); // debug
+  	// 	console.log( 'Record created.' );
+
 
 // id INTEGER PRIMARY KEY,
 // celebrity VARCHAR(80),
