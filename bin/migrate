@@ -2,9 +2,9 @@
 
 const db = require('../config/database');
 
-db.serialize( function() {
-  db.run('DROP TABLE IF EXISTS sightings');
-  db.run(`
+db.query('DROP TABLE IF EXISTS sightings');
+
+db.query(`
     CREATE TABLE sightings (
       id INTEGER PRIMARY KEY,
       celebrity VARCHAR(80),
@@ -13,8 +13,5 @@ db.serialize( function() {
       location VARCHAR(80),
       comment VARCHAR(255)
     );
-  `);
-  console.log( 'Migration successful.' );
-});
-
-db.close();
+  `).then( response => console.log( 'Migration successful.' ))
+    .catch( error => console.error( error.stack ));
