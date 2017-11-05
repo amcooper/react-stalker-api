@@ -6,7 +6,7 @@ db.query('DROP TABLE IF EXISTS sightings');
 
 db.query(`
     CREATE TABLE sightings (
-      id INTEGER PRIMARY KEY,
+      id SERIAL PRIMARY KEY,
       celebrity VARCHAR(80),
       stalker VARCHAR(80),
       date TIMESTAMP,
@@ -15,3 +15,5 @@ db.query(`
     );
   `).then( response => console.log( 'Migration successful.' ))
     .catch( error => console.error( error.stack ));
+
+// id INTEGER SERIAL PRIMARY KEY
