@@ -1,11 +1,23 @@
-const { Pool } = require ('pg');
-
-const pool = new Pool({
-  user: 'adamcooper',
-  host: '127.0.0.1',
-  database: 'react_stalker',
-  // password: 'secretpassword'
+const knex = require( 'knex' )({
+	client: 'pg',
+	connection: {
+		host: '127.0.0.1',
+		user: 'adamcooper',
+		database: 'react_stalker'
+	},
+	debug: true
 });
+
+
+
+// const { Pool } = require ('pg');
+
+// const pool = new Pool({
+//   user: 'adamcooper',
+//   host: '127.0.0.1',
+//   database: 'react_stalker',
+//   // password: 'secretpassword'
+// });
 
 // module.exports = {
 //   query: (text, params, callback) => {
@@ -13,4 +25,4 @@ const pool = new Pool({
 // 	}
 // };
 
-module.exports = pool;
+// module.exports = pool;
