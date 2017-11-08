@@ -33,16 +33,16 @@ module.exports = function( app ) {
     db.query( 'SELECT * FROM sightings WHERE id = $1', [ request.params.id ])
       .then( res_select => {
         selected = res_select.rows[0];
-        console.log( selected ); // debug
-        console.log( request.body.date ); // debug
+        // console.log( selected ); // debug
+        // console.log( request.body.date ); // debug
         const dateIsUndefined = request.body.date === undefined;
-        const queryString = `UPDATE sightings SET celebrity = $1 || $2, stalker = $3 || $4, location = $5 || $6, comment = $7 || $8${ dateIsUndefined ? '' : ', date = $9' }`;
-        const queryParameters = [ request.body.celebrity, selected.celebrity, request.body.stalker, selected.stalker, request.body.location, selected.location, request.body.comment, selected.comment ].concat( dateIsUndefined ? [ ] : [ request.body.date ]);
-
-      db.query( queryString, queryParameters )
+        const queryString = `UPDATE sightings SET celebrity = $1, stalker = $2, location = $3, comment = $4${ dateIsUndefined ? ' WHERE id = $5' : ', date = $5 WHERE id = $6' }`;
+        const queryParameters = [ request.body.celebrity || selected.celebrity, request.body.stalker || selected.stalker, request.body.location|| selected.location, request.body.comment || selected.comment ].concat( dateIsUndefined ? [ ] : [ request.body.date ]).concat([ request.params.id ]);
+        console.log( `*** ${queryString} *** ${queryParameters} ***` );
+        db.query( queryString, queryParameters )
           .then( res_update => response.json( res_update.rows[0]))
           .catch( e_update => console.error( e_update.stack ));
-      })
+        })
       .catch( e_select => console.error( e_select.stack ));
   });
 
