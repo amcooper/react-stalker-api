@@ -14,7 +14,7 @@ module.exports = function( app ) {
   });
 
   app.post( '/api/sightings', ( request, response, next ) => {
-  	console.log( request ); // debug
+  	// console.log( request ); // debug
   	// curl -X POST \
   // http://localhost:3033/api/sightings \
   // -H 'cache-control: no-cache' \
@@ -27,6 +27,23 @@ module.exports = function( app ) {
   	  	response.json( res.rows[0] );
   	  })
   	  .catch( e => console.error( e.stack ));
+  });
+
+  app.put( '/api/sightings/:id', ( request, response, next ) => {
+    db.query( 'SELECT * FROM sightings WHERE id = $1', [ request.params.id ])
+      .then( res_select => {
+        selected = res_select.rows[0];
+        console.log( selected ); // debug
+        console.log( request.body.date ); // debug
+        const dateIsUndefined = request.body.date === undefined;
+        const queryString = `UPDATE sightings SET celebrity = $1 || $2, stalker = $3 || $4, location = $5 || $6, comment = $7 || $8${ dateIsUndefined ? '' : ', date = $9' }`;
+        const queryParameters = [ request.body.celebrity, selected.celebrity, request.body.stalker, selected.stalker, request.body.location, selected.location, request.body.comment, selected.comment ].concat( dateIsUndefined ? [ ] : [ request.body.date ]);
+
+      db.query( queryString, queryParameters )
+          .then( res_update => response.json( res_update.rows[0]))
+          .catch( e_update => console.error( e_update.stack ));
+      })
+      .catch( e_select => console.error( e_select.stack ));
   });
 
   app.delete( '/api/sightings/:id', ( request, response, next ) => {
