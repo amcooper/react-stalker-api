@@ -36,11 +36,11 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    connection: {
-      database: 'react_stalker',
-      user:     'adamcooper',
-      // password: 'password'
-    },
+    // connection: {
+    //   database: 'react_stalker',
+    //   user:     'adamcooper',
+    //   // password: 'password'
+    // },
     pool: {
       min: 2,
       max: 10
