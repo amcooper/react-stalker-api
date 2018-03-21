@@ -1,4 +1,8 @@
 .DS_Store
 *.sqlite3
 node_modules/
+<<<<<<< HEAD
 *.env
+=======
+.env
+>>>>>>> 0efa2b56a4768e3367046bd1680f781ee13a8191
