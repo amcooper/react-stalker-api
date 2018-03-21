@@ -3,12 +3,13 @@
 module.exports = {
 
   development: {
-    client: 'postgresql',
-    connection: {
-      database: 'react_stalker',
-      user:     'adamcooper',
-      // password: 'password'
-    },
+    client: 'pg',
+    connection: process.env.DATABASE_URL || 'postgres://localhost:5432/react_stalker',
+    // connection: {
+    //   database: 'react_stalker',
+    //   user:     'adamcooper',
+    //   // password: 'password'
+    // },
     pool: {
       min: 2,
       max: 10
@@ -19,12 +20,13 @@ module.exports = {
   },
 
   staging: {
-    client: 'postgresql',
-    connection: {
-      database: 'react_stalker',
-      user:     'adamcooper',
-      // password: 'password'
-    },
+    client: 'pg',
+    connection: process.env.DATABASE_URL || 'postgres://localhost:5432/react_stalker',
+    // connection: {
+    //   database: 'react_stalker',
+    //   user:     'adamcooper',
+    //   // password: 'password'
+    // },
     pool: {
       min: 2,
       max: 10
@@ -35,12 +37,13 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
-    connection: {
-      database: 'react_stalker',
-      user:     'adamcooper',
-      // password: 'password'
-    },
+    client: 'pg',
+    connection: process.env.DATABASE_URL || 'postgres://localhost:5432/react_stalker',
+    // connection: {
+    //   database: 'react_stalker',
+    //   user:     'adamcooper',
+    //   // password: 'password'
+    // },
     pool: {
       min: 2,
       max: 10
