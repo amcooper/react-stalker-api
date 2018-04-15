@@ -9,7 +9,7 @@ const methodOverride = require('method-override');
 app.use(morgan('combined'));
 app.use(methodOverride());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 // from https://enable-cors.org/server_expressjs.html
 app.use(function(req, res, next) {
@@ -25,5 +25,8 @@ app.get('/', function( request, response ) {
 	response.json('Slash route is go.');
 });
 
-app.listen( port );
-console.log(`A quokka is listening on port ${port}.`);
+app.listen( port, () => {
+  console.log(`A quokka is listening on port ${port}.`);
+});
+
+module.exports = app;

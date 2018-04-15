@@ -1,4 +1,4 @@
-
+// Testing: set up different seed files in different subfolders for the three environments.
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex('sightings').del()
