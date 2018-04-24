@@ -25,8 +25,8 @@ app.get('/', function( request, response ) {
 	response.json('Slash route is go.');
 });
 
-app.listen( port, () => {
+const server = app.listen( port, () => {
   console.log(`A quokka is listening on port ${port}.`);
 });
 
-module.exports = app;
+module.exports = {app, server};

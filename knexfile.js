@@ -17,6 +17,9 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations'
+    },
+    seeds: {
+      directory: './seeds/development'
     }
   },
 
@@ -34,6 +37,9 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations'
+    },
+    seeds: {
+      directory: './seeds/staging'
     }
   },
 
@@ -51,7 +57,30 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations'
+    },
+    seeds: {
+      directory: './seeds/production'
     }
-  }
+  },
+
+  test: {
+    client: 'pg',
+    connection: 'postgres://localhost:5432/react_stalker_test',
+    // connection: {
+    //   database: 'react_stalker',
+    //   user:     'adamcooper',
+    //   // password: 'password'
+    // },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
+    },
+    seeds: {
+      directory: './seeds/test'
+    }
+  }  
 
 };
